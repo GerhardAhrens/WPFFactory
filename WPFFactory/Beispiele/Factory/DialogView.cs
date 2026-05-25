@@ -5,5 +5,6 @@
         None = 0,
         Home = 1,
         DialogOverView = 2,
+        DialogEdit = 3,
     }
 }

@@ -105,6 +105,8 @@ namespace WPFFactory
             StatusbarMain.Statusbar.Notification = "Bereit";
 
             App.EventAgg.Subscribe<ChangeViewEventArgs>(async (evt, ct) => this.ChangeControl(evt));
+            App.EventAgg.Subscribe<StatusEvent>(async (evt, ct) => this.OnUpdateStatusBar(evt));
+
 
             ChangeViewEventArgs args = new();
             args.MenuButton = DialogView.Home;
@@ -196,6 +198,7 @@ namespace WPFFactory
         {
             Factory.RegisterSingleton<DialogView>(DialogView.Home, () => new HelloUC());
             Factory.RegisterTransient<DialogView>(DialogView.DialogOverView, (param) => new DialogOverviewUC((ChangeViewEventArgs)param!));
+            Factory.RegisterTransient<DialogView>(DialogView.DialogEdit, (param) => new DialogEditUC((ChangeViewEventArgs)param!));
         }
 
         private void ChangeControl(ChangeViewEventArgs args)
@@ -208,5 +211,12 @@ namespace WPFFactory
             this.Dispatcher.Invoke(() => Mouse.OverrideCursor = Cursors.Arrow);
 
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Member als statisch markieren", Justification = "<Ausstehend>")]
+        private void OnUpdateStatusBar(StatusEvent evt)
+        {
+            StatusbarMain.Statusbar.Notification = evt.Message;
+        }
+
     }
 }

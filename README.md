@@ -9,6 +9,9 @@
 
 Das Projekt zeigt den Einsatz des Factory-Design-Patterns in einer WPF-Anwendung. Es bietet eine einfache Möglichkeit, verschiedene Komponenten zu erstellen und zu verwalten, ohne dass der Benutzer sich um die Details der Implementierung kümmern muss. Zusätzlich wird auch der EventAggregator eingesetzt um eine Anwendungsübergreifende Dialog-Navigation zu ermöglichen.
 
+<img src="MainWindow.png" style="width:650px;"/>
+
+
 # Features
 
 # Möglichkeiten

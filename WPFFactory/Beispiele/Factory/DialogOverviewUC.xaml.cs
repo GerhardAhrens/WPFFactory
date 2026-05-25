@@ -17,6 +17,8 @@
 
             this.GoBackCommand = new CommandBase(this.OnGoBack, () => true);
             this.EditDialogCommand = new CommandBase(this.OnEditDialog, () => true);
+            this.DeleteDataCommand = new CommandBase(this.OnDeleteData, () => true);
+
             this.DataContext = this;
         }
 
@@ -28,12 +30,19 @@
 
         public ChangeViewEventArgs CurrentCtorArgs { get; set; }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private async void OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (App.EventAgg.IsSubscription<StatusEvent>() == true)
+            {
+                await App.EventAgg.PublishAsync(new StatusEvent(Guid.NewGuid(), "Bereit"));
+            }
         }
 
         public CommandBase GoBackCommand { get; private set; }
         public CommandBase EditDialogCommand { get; private set; }
+        public CommandBase DeleteDataCommand { get; private set; }
+
+        private MessageBase Message { get; } = new MessageBase();
 
         private async void OnGoBack()
         {
@@ -48,9 +57,21 @@
             }
         }
 
-        private void OnEditDialog()
+        private async void OnEditDialog()
         {
-            Guid id = Guid.CreateVersion7();
+            ChangeViewEventArgs args = this.CurrentCtorArgs;
+            args.MenuButton = DialogView.DialogEdit;
+            args.FromPage = DialogView.DialogOverView;
+            args.EntityId = Guid.CreateVersion7();
+
+            if (App.EventAgg.IsSubscription<ChangeViewEventArgs>() == true)
+            {
+                await App.EventAgg.PublishAsync(args);
+            }
+        }
+        private void OnDeleteData()
+        {
+            this.Message.Question("Löschen", "Soll der gewählte Datensatz gelöscht werden=");
         }
     }
 }
