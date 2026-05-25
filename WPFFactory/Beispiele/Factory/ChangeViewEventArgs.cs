@@ -35,12 +35,12 @@ namespace WPFFactory.Beispiele
         /// <summary>
         /// Menüpunkt als Enum
         /// </summary>
-        public DialogView MenuButton { get; set; }
+        public Enum MenuButton { get; set; }
 
         /// <summary>
         /// Menüpunkt als Enum
         /// </summary>
-        public DialogView FromPage { get; set; }
+        public Enum FromPage { get; set; }
 
         /// <summary>
         /// ID des Entity Objektes

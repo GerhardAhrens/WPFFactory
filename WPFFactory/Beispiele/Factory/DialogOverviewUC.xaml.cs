@@ -47,7 +47,7 @@
         private async void OnGoBack()
         {
             ChangeViewEventArgs args = this.CurrentCtorArgs;
-            args.MenuButton = DialogView.Home;
+            args.MenuButton = BasisView.Home;
             args.FromPage = DialogView.DialogOverView;
 
 

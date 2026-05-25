@@ -109,8 +109,8 @@ namespace WPFFactory
 
 
             ChangeViewEventArgs args = new();
-            args.MenuButton = DialogView.Home;
-            args.FromPage = DialogView.Home;
+            args.MenuButton = BasisView.Home;
+            args.FromPage = BasisView.Home;
             this.ChangeControl(args);
         }
 
@@ -158,15 +158,15 @@ namespace WPFFactory
                 if (viewName == "Home")
                 {
                     ChangeViewEventArgs args = new();
-                    args.MenuButton = DialogView.Home;
-                    args.FromPage = DialogView.Home;
+                    args.MenuButton = BasisView.Home;
+                    args.FromPage = BasisView.Home;
                     this.ChangeControl(args);
                 }
                 else if (viewName == "Liste")
                 {
                     ChangeViewEventArgs args = new();
                     args.MenuButton = DialogView.DialogOverView;
-                    args.FromPage = DialogView.Home;
+                    args.FromPage = BasisView.Home;
                     this.ChangeControl(args);
                 }
             }
@@ -196,7 +196,7 @@ namespace WPFFactory
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Member als statisch markieren", Justification = "<Ausstehend>")]
         private void RegisterFactory()
         {
-            Factory.RegisterSingleton<DialogView>(DialogView.Home, () => new HelloUC());
+            Factory.RegisterSingleton<BasisView>(BasisView.Home, () => new HelloUC());
             Factory.RegisterTransient<DialogView>(DialogView.DialogOverView, (param) => new DialogOverviewUC((ChangeViewEventArgs)param!));
             Factory.RegisterTransient<DialogView>(DialogView.DialogEdit, (param) => new DialogEditUC((ChangeViewEventArgs)param!));
         }
@@ -206,7 +206,15 @@ namespace WPFFactory
             this.Dispatcher.Invoke(() => Mouse.OverrideCursor = Cursors.Wait);
 
             this.WorkContent = null;
-            this.WorkContent = Factory.Get<UserControl, DialogView>(args.MenuButton, args);
+
+            if (args.MenuButton is BasisView)
+            {
+                this.WorkContent = Factory.Get<UserControl, BasisView>((BasisView)args.MenuButton, args);
+            }
+            else if (args.MenuButton is DialogView)
+            {
+                this.WorkContent = Factory.Get<UserControl, DialogView>((DialogView)args.MenuButton, args);
+            }
 
             this.Dispatcher.Invoke(() => Mouse.OverrideCursor = Cursors.Arrow);
 

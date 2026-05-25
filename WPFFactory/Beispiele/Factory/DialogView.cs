@@ -3,8 +3,7 @@
     public enum DialogView
     {
         None = 0,
-        Home = 1,
-        DialogOverView = 2,
-        DialogEdit = 3,
+        DialogOverView = 1,
+        DialogEdit = 2,
     }
 }
